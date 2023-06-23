@@ -109,7 +109,7 @@ class APIImpl:
 	def _start_chrome_driver(self, headless, maximize, options, capabilities):
 		chrome_options = self._get_chrome_options(headless, maximize, options)
 		try:
-			result = Chrome(options=chrome_options, desired_capabilities=capabilities)
+			result = Chrome(options=chrome_options)
 		except WebDriverException:
 			# This usually happens when chromedriver is not on the PATH.
 			driver_path = self._use_included_web_driver('chromedriver')
