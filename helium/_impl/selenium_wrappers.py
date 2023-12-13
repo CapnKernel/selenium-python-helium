@@ -1,4 +1,4 @@
-from distutils.version import StrictVersion
+from packaging import version
 from helium._impl.util.geom import Rectangle
 from selenium.common.exceptions import StaleElementReferenceException, \
 	NoSuchFrameException, WebDriverException
@@ -42,7 +42,7 @@ class WebDriverWrapper(Wrapper):
 			# Alert or a Window.
 			return 0
 	# Compare the version with '4.0.0'
-	if StrictVersion(selenium.__version__) >= StrictVersion('4.0.0'):
+	if version.Version(selenium.__version__) >= version.Version('4.0.0'):
 		def find_elements(self, by, xpath):
 			# Selenium sometimes returns None. For robustness, we turn this into []:
 			return self.target.find_elements(by, xpath) or []
