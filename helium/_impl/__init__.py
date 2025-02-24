@@ -1,5 +1,5 @@
 from copy import copy
-from distutils.version import StrictVersion
+from packaging.version import Version
 from helium._impl.match_type import PREFIX_IGNORE_CASE
 from helium._impl.selenium_wrappers import WebElementWrapper, \
 	WebDriverWrapper, FrameIterator, FramesChangedWhileIterating
@@ -791,18 +791,18 @@ class SImpl(HTMLElementImpl):
 	def find_all_in_curr_frame(self):
 		wrap = lambda web_elements: list(map(WebElementWrapper, web_elements))
 		if self.selector.startswith('@'):
-			if StrictVersion(selenium.__version__) >= StrictVersion('4.0.0'):
+			if Version(selenium.__version__) >= Version('4.0.0'):
 			    _xpath = wrap(self._driver.find_elements(By.NAME, self.selector[1:]))
 			else:
 			    _xpath = wrap(self._driver.find_elements_by_name(self.selector[1:]))			
 			return _xpath
 		if self.selector.startswith('//'):
-			if StrictVersion(selenium.__version__) >= StrictVersion('4.0.0'):
+			if Version(selenium.__version__) >= Version('4.0.0'):
 			    _xpath = wrap(self._driver.find_elements(By.XPATH, self.selector))
 			else:
 			    _xpath = wrap(self._driver.find_elements_by_xpath(self.selector))
 			return _xpath
-		if StrictVersion(selenium.__version__) >= StrictVersion('4.0.0'):
+		if Version(selenium.__version__) >= Version('4.0.0'):
 		    _xpath = wrap(self._driver.find_elements(By.CSS_SELECTOR, self.selector))
 		else:
 		    _xpath = wrap(self._driver.find_elements_by_css_selector(self.selector))
@@ -811,7 +811,7 @@ class SImpl(HTMLElementImpl):
 class HTMLElementIdentifiedByXPath(HTMLElementImpl):
 	def find_all_in_curr_frame(self):
 		x_path = self.get_xpath()
-		if StrictVersion(selenium.__version__) >= StrictVersion('4.0.0'):
+		if Version(selenium.__version__) >= Version('4.0.0'):
 		    _xpath = self._sort_search_result(
 			list(map(
 				WebElementWrapper, self._driver.find_elements(By.XPATH, x_path)
@@ -963,7 +963,7 @@ class LabelledElement(HTMLElementImpl):
 	def _find_elts(self, xpath=None):
 		if xpath is None:
 			xpath = self.get_xpath()
-		if StrictVersion(selenium.__version__) >= StrictVersion('4.0.0'):
+		if Version(selenium.__version__) >= Version('4.0.0'):
 		    _xpath = list(map(
 			WebElementWrapper, self._driver.find_elements(By.XPATH, xpath)
 		    ))
